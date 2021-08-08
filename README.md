@@ -23,3 +23,5 @@ end
 vim.api.nvim_set_keymap("n","<Leader>lr", ":lua move_chs(1)<CR>", {})
 vim.api.nvim_set_keymap("n","<Leader>ll", ":lua move_chs(0)<CR>", {})
 ```
+
+目前还比较慢，有很大的优化空间...
