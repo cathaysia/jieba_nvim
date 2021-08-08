@@ -1,0 +1,7 @@
+
+
+constexpr char const * const DICT_PATH="@DICT_PATH@";
+constexpr char const * const HMM_PATH="@HMM_PATH@";
+constexpr char const * const USER_DICT_PATH="@USER_DICT_PATH@";
+constexpr char const * const IDF_PATH= "@IDF_PATH@";
+constexpr char const * const STOP_WORD_PATH="@STOP_WORD_PATH@";
