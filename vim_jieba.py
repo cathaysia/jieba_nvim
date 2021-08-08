@@ -22,6 +22,6 @@ else:
     cur_pos = sys.argv[1].__len__()
     size = seg_list.__len__() - 1
     while cur_pos >= int(sys.argv[2]) and cur_pos >= 0:
-        cur_pos -= seg_list[size].__len__()
+        cur_pos -= seg_list[size].encode("utf-8").__len__()
         size -= 1
 print(cur_pos)
