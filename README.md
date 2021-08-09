@@ -1,7 +1,5 @@
 # 说明
 
-如何使用：
-
 1. cmake -B build -S . -DCMAKE_BUID_TYPE=Release
 2. cmake --build build
 3. cp build/libjiebamove.so ~/.config/nvim/lua
