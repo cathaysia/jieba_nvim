@@ -18,7 +18,7 @@ extern "C" {
 int getPos(const std::string &, size_t, bool);
 
 // 这里绝对不能返回一个左值引用
-cppjieba::Jieba *getJieba() {
+cppjieba::Jieba& getJieba() {
     // @TODO 这里会有内存泄漏吗？
     static cppjieba::Jieba *     pjieba = nullptr;
     static std::mutex            mu;
@@ -31,12 +31,12 @@ cppjieba::Jieba *getJieba() {
         pjieba = new cppjieba::Jieba(path + DICT_PATH, path + HMM_PATH, path + USER_DICT_PATH, path + IDF_PATH,
                                      path + STOP_WORD_PATH);
     }
-    return pjieba;
+    return *pjieba;
 }
 int getPos(const std::string &line, size_t pos, bool isRight) {
     std::vector<std::string> segList;
-    auto                     jieba = getJieba();
-    jieba->Cut(line, segList, true);
+    auto&                     jieba = getJieba();
+    jieba.Cut(line, segList, true);
     if(isRight) {
         size_t curPos = 0;
         for(auto const &item: segList) {
