@@ -8,9 +8,11 @@
 
 # 构建
 
-1. cmake -B build -DCMAKE_BUID_TYPE=Release
-2. cmake --build build
-3. cmake --install build --prefix=${HOME}
+1. git clone --depth=1 --recusive https://github.com:cathaysia/jieba_nvim.git
+2. cd jieba_nvim
+3. cmake -B build -DCMAKE_BUID_TYPE=Release
+4. cmake --build build
+5. cmake --install build --prefix=${HOME}
 
 > 注意！ --prefix=${HOME} 是必须的！！！
 
