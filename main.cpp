@@ -22,7 +22,6 @@ constexpr char const *const STOP_WORD_PATH = "data/stop_words.utf8";
 
 int getPos(const std::string &, size_t, bool);
 
-// 这里绝对不能返回一个左值引用
 cppjieba::Jieba &getJieba() {
     // @TODO 这里会有内存泄漏吗？不会，Lua 的模块是没法 unload 的
     static cppjieba::Jieba *     pjieba = nullptr;
