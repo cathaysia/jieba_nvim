@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <cppjieba/Jieba.hpp>
 #include <cstddef>
-// 这个头文件会导致库没法使用
+// WARNING: 这个头文件会导致库没法使用
 // #include <lauxlib.h>
 #include <atomic>
 #include <mutex>
@@ -23,7 +23,7 @@ constexpr char const *const STOP_WORD_PATH = "data/stop_words.utf8";
 int getPos(const std::string &, size_t, bool);
 
 cppjieba::Jieba &getJieba() {
-    // @TODO 这里会有内存泄漏吗？不会，Lua 的模块是没法 unload 的
+    // INFO: 这里会有内存泄漏吗？不会，Lua 的模块是没法 unload 的
     static cppjieba::Jieba *     pjieba = nullptr;
     static std::mutex            mu;
     std::scoped_lock<std::mutex> guard(mu);
