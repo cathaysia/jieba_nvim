@@ -1,4 +1,3 @@
-#include <data_config.h>
 #include <algorithm>
 #include <cppjieba/Jieba.hpp>
 #include <cstddef>
@@ -7,25 +6,31 @@
 #include <atomic>
 #include <mutex>
 #include <string>
+#include <thread>
 #include <vector>
 #include "lua.hpp"
-#include <thread>
 
 extern "C" {
 #include <dlfcn.h>
 }
 
+constexpr char const *const DICT_PATH      = "data/jieba.dict.utf8";
+constexpr char const *const HMM_PATH       = "data/hmm_model.utf8";
+constexpr char const *const USER_DICT_PATH = "data/user.dict.utf8";
+constexpr char const *const IDF_PATH       = "data/idf.utf8";
+constexpr char const *const STOP_WORD_PATH = "data/stop_words.utf8";
+
 int getPos(const std::string &, size_t, bool);
 
 // 这里绝对不能返回一个左值引用
-cppjieba::Jieba& getJieba() {
-    // @TODO 这里会有内存泄漏吗？
+cppjieba::Jieba &getJieba() {
+    // @TODO 这里会有内存泄漏吗？不会，Lua 的模块是没法 unload 的
     static cppjieba::Jieba *     pjieba = nullptr;
     static std::mutex            mu;
     std::scoped_lock<std::mutex> guard(mu);
     if(!pjieba) {
         Dl_info dl_info;
-        dladdr((void *)getPos, &dl_info);
+        dladdr((void *)getJieba, &dl_info);
         std::string path(dl_info.dli_fname);
         path   = path.substr(0, path.find_last_of('/') + 1);
         pjieba = new cppjieba::Jieba(path + DICT_PATH, path + HMM_PATH, path + USER_DICT_PATH, path + IDF_PATH,
@@ -35,7 +40,7 @@ cppjieba::Jieba& getJieba() {
 }
 int getPos(const std::string &line, size_t pos, bool isRight) {
     std::vector<std::string> segList;
-    auto&                     jieba = getJieba();
+    auto &                   jieba = getJieba();
     jieba.Cut(line, segList, true);
     if(isRight) {
         size_t curPos = 0;
