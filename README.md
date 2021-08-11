@@ -1,5 +1,12 @@
 # 说明
 
+使用 jieba 对中文进行分词，增强了 vim 的 e,b 功能
+
+# 预览
+
+![荷塘月色](./screenshot/荷塘月色.gif)
+
+# 构建
 1. cmake -B build -S . -DCMAKE_BUID_TYPE=Release
 2. cmake --build build
 3. cp build/libjiebamove.so ~/.config/nvim/lua
@@ -20,11 +27,8 @@ function _G.move_chs(isRight)
 end
 
 
-vim.api.nvim_set_keymap("n","<Leader>lr", ":lua move_chs(1)<CR>", {})
-vim.api.nvim_set_keymap("n","<Leader>ll", ":lua move_chs(0)<CR>", {})
+vim.api.nvim_set_keymap("n","e", ":lua move_chs(1)<CR>", {})
+vim.api.nvim_set_keymap("n","b", ":lua move_chs(0)<CR>", {})
 ```
 
-# 预览
-
-![荷塘月色](./screenshot/荷塘月色.gif)
 
