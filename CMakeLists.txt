@@ -3,9 +3,10 @@ cmake_minimum_required(VERSION 3.20)
 project(jiebaMove LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
-
 add_library(jiebamove SHARED main.cpp)
+target_link_options(jiebamove PRIVATE -s)
 
+# 检查依赖
 include(FetchContent)
 fetchcontent_declare(
   cppjieba
@@ -33,3 +34,12 @@ add_custom_command(
 find_package(Lua REQUIRED)
 target_include_directories(jiebamove PRIVATE ${LUA_INCLUDE_DIR} ${cppjieba_SOURCE_DIR}/deps ${cppjieba_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include)
 target_link_libraries(jiebamove PRIVATE ${LUA_LIBRARIES})
+
+install(
+  TARGETS jiebamove
+  LIBRARY DESTINATION .config/nvim/lua
+)
+install(
+  FILES
+  ${data_files} DESTINATION .config/nvim/lua/data
+)

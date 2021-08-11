@@ -7,10 +7,16 @@
 ![荷塘月色](./screenshot/荷塘月色.gif)
 
 # 构建
-1. cmake -B build -S . -DCMAKE_BUID_TYPE=Release
+
+1. cmake -B build -DCMAKE_BUID_TYPE=Release
 2. cmake --build build
-3. cp build/libjiebamove.so ~/.config/nvim/lua
-4. cp build/data/* ~/.config/nvim/lua -r
+3. cmake --install build --prefix=${HOME}
+
+> 注意！ --prefix=${HOME} 是必须的！！！
+
+> 默认安装路径为 ${HOME}/.config/nvim/lua/。当然，你也可以手动将 build/libjiebamove.so 和
+> build/libjiebamove/data 拷贝到任意 lua 可以识别的路径，唯一的要求是 data 目录必须要荷
+> libjiebamove.so 位于同于路径
 
 在 init.lua 中附加以下内容：
 
