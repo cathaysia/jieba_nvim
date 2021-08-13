@@ -45,12 +45,19 @@ int getPos(const std::string &line, size_t pos, bool isRight) {
         size_t curPos = 0;
         for(auto const &item: segList) {
             curPos += item.length();
-            if(curPos > pos) return curPos;
+            if(curPos > pos) {
+                // 跳过空格
+
+                while(line[curPos] == ' ' && curPos < line.length()) ++curPos;
+
+                return curPos;
+            };
         }
     }
     size_t curPos = line.length();
     for(auto beg = segList.rbegin(); curPos >= pos && curPos; ++beg) { curPos -= beg->length(); }
-
+    // 跳过空格
+    while(line[curPos] == ' ' && curPos > 0) --curPos;
     return curPos;
 }
 
