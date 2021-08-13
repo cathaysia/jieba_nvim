@@ -47,9 +47,7 @@ int getPos(const std::string &line, size_t pos, bool isRight) {
             curPos += item.length();
             if(curPos > pos) {
                 // 跳过空格
-
                 while(line[curPos] == ' ' && curPos < line.length()) ++curPos;
-
                 return curPos;
             };
         }
@@ -64,8 +62,8 @@ int getPos(const std::string &line, size_t pos, bool isRight) {
 extern "C" int l_pos(lua_State *L) {
     auto        line_data = luaL_checkstring(L, 1);
     std::string line(line_data);
-    auto        pos     = luaL_checknumber(L, 2);
-    auto        isRight = luaL_checknumber(L, 3) != 0;
+    auto        pos     = luaL_checkinteger(L, 2);
+    auto        isRight = luaL_checkinteger(L, 3) != 0;
     auto        result  = getPos(line, pos, isRight);
 
     lua_pushinteger(L, result);
