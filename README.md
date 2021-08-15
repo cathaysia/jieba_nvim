@@ -8,6 +8,8 @@
 
 # 构建
 
+构建依赖为 lua-devel (fedora)、git、cmake、c++ 17
+
 1. git clone --depth=1 --recusive https://github.com:cathaysia/jieba_nvim.git
 2. cd jieba_nvim
 3. cmake -B build -DCMAKE_BUID_TYPE=Release
