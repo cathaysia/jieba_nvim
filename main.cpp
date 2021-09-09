@@ -3,8 +3,6 @@
 #include <cstddef>
 // WARNING: 这个头文件会导致库没法使用
 // #include <lauxlib.h>
-#include <atomic>
-#include <mutex>
 #include <string>
 #include <thread>
 #include <vector>
@@ -24,18 +22,13 @@ int getPos(const std::string &, size_t, bool);
 
 cppjieba::Jieba &getJieba() {
     // INFO: 这里会有内存泄漏吗？不会，Lua 的模块是没法 unload 的
-    static cppjieba::Jieba *     pjieba = nullptr;
-    static std::mutex            mu;
-    std::scoped_lock<std::mutex> guard(mu);
-    if(!pjieba) {
-        Dl_info dl_info;
-        dladdr((void *)getJieba, &dl_info);
-        std::string path(dl_info.dli_fname);
-        path   = path.substr(0, path.find_last_of('/') + 1);
-        pjieba = new cppjieba::Jieba(path + DICT_PATH, path + HMM_PATH, path + USER_DICT_PATH, path + IDF_PATH,
-                                     path + STOP_WORD_PATH);
-    }
-    return *pjieba;
+    Dl_info dl_info;
+    dladdr((void *)getJieba, &dl_info);
+    std::string path(dl_info.dli_fname);
+    path = path.substr(0, path.find_last_of('/') + 1);
+    static cppjieba::Jieba jieba(path + DICT_PATH, path + HMM_PATH, path + USER_DICT_PATH, path + IDF_PATH,
+                                 path + STOP_WORD_PATH);
+    return jieba;
 }
 int getPos(const std::string &line, size_t pos, bool isRight) {
     std::vector<std::string> segList;
